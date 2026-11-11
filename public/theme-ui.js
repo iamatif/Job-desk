@@ -1,0 +1,6 @@
+const moon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.2 14A8.5 8.5 0 0 1 10 3.8 8.5 8.5 0 1 0 20.2 14Z"/></svg>';
+const sun='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg>';
+export function themeControl(){return '<button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch appearance"></button>';}
+function sync(){const dark=window.JobdeskTheme.current()==='dark';document.querySelectorAll('[data-theme-toggle]').forEach(button=>{button.innerHTML=`${dark?sun:moon}<span>${dark?'Light':'Dark'}</span>`;button.setAttribute('aria-label',`Switch to ${dark?'light':'dark'} mode`);button.setAttribute('aria-pressed',String(dark));button.title=`Switch to ${dark?'light':'dark'} mode`;});}
+export function bindThemeControls(){document.querySelectorAll('[data-theme-toggle]').forEach(button=>{button.onclick=()=>window.JobdeskTheme.toggle();});sync();}
+window.addEventListener('jobdesk:theme',sync);

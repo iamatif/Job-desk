@@ -1,0 +1,104 @@
+JOBDESK — PRIVATE LOCAL JOB SEARCH
+
+Open http://localhost:4180
+Start/reopen: START-JOBDESK.cmd
+Stop: STOP-JOBDESK.cmd
+Requires Node.js24 or newer. The server listens only on127.0.0.1.
+
+BROWSER SEARCH (3.0)
+Overview > add your keywords > choose Pakistan/remote and posting date > Fetch jobs.
+Start with2–3keywords; up to7are supported. A visible Chromium window opens in a
+separate Jobdesk browser profile. It searches public Indeed/LinkedIn boards and uses Google discovery for
+listings, then verifies each listing's actual posting date, location and relevance.
+Google's page-update date is not accepted as the job posting date. Unknown dates,
+expired jobs and unsuitable locations are excluded. Nothing is applied automatically.
+
+If a website needs CAPTCHA, sign-in or another access check, Jobdesk pauses. Complete
+the check yourself in the visible search window and choose Resume fetch in Jobdesk.
+Cancel fetch stops the run and closes its browser. No challenge bypasses, proxies,
+stealth plugins or automatic credential entry are included. A pause or no verified
+matches is an honest outcome; access to every listing is not guaranteed.
+
+Browser search starts only when you press Fetch jobs. Opening Overview does not
+launch a browser or spend API credits. Progress and partial verified jobs are shown.
+Use Save to shortlist to retain jobs; Apply Now opens the original site in a new tab.
+
+OPTIONAL JSEARCH BACKUP
+The backup checkbox on Overview is off by default. When selected, JSearch is used
+only if a completed browser search has no verified jobs. It is not automatically
+used to skip a paused browser access check. Account settings > Job search APIs >
+JSearch manages its saved key and availability. Provider quota still applies.
+Other saved provider keys remain preserved for existing integrations; this browser
+worker uses only the explicitly selected JSearch backup and focuses Indeed/LinkedIn.
+
+BROWSER INSTALLATION / SOURCE COPY
+On this PC Chromium is installed under data/playwright-browsers. On a source copy,
+run INSTALL-BROWSER.cmd once to install locked dependencies and Chromium from official
+sources, then START-JOBDESK.cmd. Browser profiles live under data/browser-profiles,
+separate from your everyday Chrome profile. Profiles may retain website sessions.
+They are excluded from the source archive, along with all other private data.
+
+ACCOUNT AND PROFILE
+Create your own local email account; no public default password exists. Local email
+accounts do not verify email ownership or send reset mail. Account recovery can
+create a one-time recovery code: save it privately. Uploaded PDF/DOCX/TXT CVs up to
+5MB are read locally. Review extracted details before saving your profile. Scanned
+PDFs need a text version. My profile supports manual skills/work/education/awards,
+certifications/projects and contact links. CV text is not sent to a search provider.
+
+GOOGLE SIGN-IN
+Google sign-in requires your own Web application OAuth client. In Google Cloud,
+set authorized origin http://localhost:4180 and redirect
+http://localhost:4180/auth/google/callback. Configure consent/test users as required.
+Account settings > Google sign-in stores the client ID and secret locally. Connect
+my Google account asks for your current Jobdesk password before linking. Google's
+account may have a different email; an already-linked account cannot be merged.
+Official guide https://developers.google.com/identity/protocols/oauth2/web-server
+
+SAVED JOBS AND HISTORY
+Saved jobs is your shortlist, not an automatic application submission service.
+Unsave preserves history; History lets you search by company, position or date and
+save a job again. Older undated records show Date not recorded. Earlier application
+records are retained read-only; Application drafts/My applications modules were
+removed. The latest5000actions are retained; workspace storage supports2000job records.
+
+PRIVATE DATA / DEVELOPMENT
+Accounts, profiles, saved jobs, CVs and private settings live in data/jobdesk.sqlite.
+Google OAuth credentials live in data/google-oauth.json. Never share the data folder,
+.env or browser profiles. Back up private data with Jobdesk/browser searches stopped.
+The source zip excludes data and node_modules. Playwright browser files are installed
+locally by INSTALL-BROWSER.cmd and are not bundled in the source archive.
+
+Run tests: node --test --test-concurrency=1 tests/*.test.mjs
+Server log: data/server.log
+Source assets: public/ and lib/
+
+
+HOSTED AUTOMATIC SEARCH (3.1)
+See HOSTING-SETUP.md for cPanel compatibility checks, private environment variables,
+preflight and the external cron command. Automatic job search on Overview saves an
+account's6/12/24-hour schedule and optional JSearch preference. Cron reads the latest
+saved keywords; verified results and fetch history live in SQLite across restarts.
+No cloud deployment or cron entry is active until configured on compatible hosting.
+
+INDEED PUBLIC SEARCH FIX (3.2)
+Choose Indeed in Job boards. Indeed public search records are matched to visible
+cards by job ID, title, employer and location. Exact source posting dates are
+filtered to the selected range; summaries are labelled as listing excerpts.
+Manual completed results persist to SQLite even when the dashboard is closed.
+Live WordPress developer/Pakistan test: seven real recent Indeed jobs collected
+on11 November2026 without JSearch. Original application pages may require sign-in.
+
+INDEED PAGINATION / FEED (3.3)
+Indeed follows its observed Next Page links, up to10 pages and30 relevant matches
+per keyword. Up to7 independent keywords are supported; repeated pages stop early
+and duplicate postings merge across keywords. Actual counts depend on availability.
+The feed now enforces a14-day maximum everywhere. Latest/day/week/14-day filters
+show newest first. Cached listings age out automatically while open and on server
+reads; saved shortlist/history records are preserved. Newest card is highlighted.
+Automatic-search controls moved to Account settings > Automatic searches. Overview
+contains the keyword search and recent feed. UI timers do not launch new browser
+fetches; new jobs arrive through Fetch jobs or an installed enabled schedule.
+Live7-keyword validation on11 November2026 encountered Indeed403; manual verification
+was unavailable. Automated pagination/dedup/filter tests passed; do not treat their
+fixture counts as live job counts. Previous real Indeed results remain dated/filtered.

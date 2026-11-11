@@ -1,0 +1,20 @@
+{
+  "name": "jobdesk-local",
+  "version": "3.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "cron": "node cron.mjs",
+    "check:hosting": "node hosting-check.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "mammoth": "1.13.0",
+    "pdf-parse": "2.4.5",
+    "playwright": "1.65.0"
+  }
+}

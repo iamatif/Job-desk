@@ -1,0 +1,17 @@
+services:
+  jobdesk:
+    build: .
+    init: true
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      JOBDESK_DATA_DIR: /app/data
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+      HOST: 0.0.0.0
+    ports:
+      - "127.0.0.1:4180:4180"
+    volumes:
+      - jobdesk-data:/app/data
+    shm_size: 1gb
+volumes:
+  jobdesk-data:
